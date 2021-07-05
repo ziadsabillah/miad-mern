@@ -7,6 +7,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import Message from '../components/Message'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import bootstrapPlugin from '@fullcalendar/bootstrap'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -47,31 +48,8 @@ const AppointmentScreen = ({ history, match }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
-                    {/* <Table striped bordered hover responsive clasName='table-sm'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                            <th>Price</th>
-                            <th>Canceled</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {appointments.map((appointment) => (
-                            <tr key={appointment._id}>
-                                <td>{appointment._id}</td>
-                                <td>{appointment.startTime}</td>
-                                <td>{appointment.endTime}</td>
-                                <td>{appointment.priceFull}</td>
-                                <td>{appointment.canceled}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table> */}
-
                     <FullCalendar
-                        plugins={[dayGridPlugin, timeGridPlugin]}
+                        plugins={[dayGridPlugin, timeGridPlugin, bootstrapPlugin]}
                         themeSystem='bootstrap'
                         allDaySlot={false}
                         headerToolbar={{
