@@ -10,6 +10,15 @@ import {
   productReviewCreateReducer,
   productTopRatedReducer,
 } from './reducers/productReducers'
+
+import { 
+  appointmentListReducer,
+  appointmentDetailsReducer,
+  appointmentCancelReducer,
+  appointmentCreateReducer,
+  appointmentUpdateReducer,
+} from './reducers/appointmentReducers'
+
 import { cartReducer } from './reducers/cartReducers'
 import {
   userLoginReducer,
@@ -51,6 +60,9 @@ const reducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  appointmentList: appointmentListReducer,
+  appointmentDetails: appointmentDetailsReducer,
+  appointmentCanceled: appointmentCancelReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

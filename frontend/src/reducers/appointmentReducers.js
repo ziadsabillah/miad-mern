@@ -18,10 +18,10 @@ import {
     APPOINTMENT_UPDATE_RESET
 } from '../constants/appointmentConstants'
 
-export const appointmentListReducer = (state = {appointments = [] }, action) => {
+export const appointmentListReducer = (state = {appointments: [] }, action) => {
     switch(action.type) {
         case APPOINTMENT_LIST_REQUEST: 
-            return { loading: true, appointments = []}
+            return { loading: true, appointments: []}
         case APPOINTMENT_LIST_SUCCESS:
             return {
                 loading: false,
@@ -38,7 +38,7 @@ export const appointmentListReducer = (state = {appointments = [] }, action) => 
 
 
 export const appointmentDetailsReducer = (
-    state = {appointment = []}, action
+    state = {appointment: []}, action
 ) => {
     switch(action.type) {
         case APPOINTMENT_DETAILS_REQUEST:

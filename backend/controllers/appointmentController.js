@@ -11,7 +11,7 @@ const getAppointments = asyncHandler(async (req, res) => {
 
     const count = await Appointment.countDocuments();
     const appointments = await Appointment.find().limit(pageSize).skip(pageSize * (page - 1))
-
+    console.log(appointments);
     res.json({ appointments, page, pages: Math.ceil(count / pageSize)})
 })
 
@@ -44,12 +44,7 @@ const cancelAppointment = asyncHandler(async (req, res) => {
 
         const canceledAppointment = await appointment.save()
         res.json(canceledAppointment)
-    }
-
-    if(appointment) {
-        await appointment.remove()
-        res.json({message: 'Appointment canceled'})
-    } else {
+    }  else {
         res.status(404)
         throw new Error('Appointment not found')
     }

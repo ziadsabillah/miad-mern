@@ -13,6 +13,6 @@ router.route('/').get(getAppointments);
 
 router.route('/:id')
     .get(getAppointmentById)
-    .put(protect, cancelAppointment);
+    .put(cancelAppointment);
 
 export default router

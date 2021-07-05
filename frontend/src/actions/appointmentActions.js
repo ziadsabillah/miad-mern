@@ -74,17 +74,17 @@ export const cancelAppointment = (id) => async (dispatch) => {
             type: APPOINTMENT_CANCEL_REQUEST
         })
 
-        const {
-            userLogin: {userLogin},
-        } = getState()
+        // const {
+        //     userLogin: {userLogin},
+        // } = getState()
 
-        const config = {
-            headers: {
-                Autorization: `Bearer ${userInfo.token}`,
-            },
-        }
+        // const config = {
+        //     headers: {
+        //         Autorization: `Bearer ${userInfo.token}`,
+        //     },
+        // }
 
-        await axios.delete(`/api/appointments/${id}`, config)
+        await axios.delete(`/api/appointments/${id}`) // ,config)
 
         dispatch({
             type: APPOINTMENT_CANCEL_SUCCESS,

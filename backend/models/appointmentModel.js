@@ -11,12 +11,12 @@ const appointmentSchema = mongoose.Schema(
         cancellationReason: { type: String, required: false},
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: false,
             ref: 'Employee'
         },
         client: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: false,
             ref: 'Clinet'
         }
 
