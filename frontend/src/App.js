@@ -57,7 +57,7 @@ const App = () => {
             exact
           />
 
-          <Route path="/appointments" component={AppointmentScreen} />
+          <Route path="/admin/appointments" component={AppointmentScreen} />
           <Route path='/' component={HomeScreen} exact />
         </Container>
       </main>

@@ -25,11 +25,17 @@ const AppointmentScreen = ({ history, match }) => {
     const appointmentList = useSelector((state) => state.appointmentList)
     const { loading, error, appointments, page, pages } = appointmentList
 
-    console.log(appointments);
+    const userLogin = useSelector((state) => state.userLogin)
+
+    const { userInfo } = userLogin
 
     useEffect(() => {
-        dispatch(listAppointments('', 1))
-    }, [dispatch])
+        if(userInfo && userInfo.isAdmin) {
+            dispatch(listAppointments('', 1))
+        } else {
+            history.push('/login')
+        }
+    }, [dispatch, history, userInfo])
 
     return (
         <>
@@ -59,13 +65,12 @@ const AppointmentScreen = ({ history, match }) => {
                         }}
                         initialView="timeGridDay"
                         weekends={false}
-                        slotDuration="00:30:00"
                         // events={appointments.map((appointment) => (
                         //     { id: appointment._id, title: 'App', allDay: false, start: appointment?.startDate, end: appointment?.endDate}
                         // ))} 
                         events={
                             [
-                                {title: 'appointment 1', start: appointments[0].startTime.replace('Z', ''), end: appointments[0].endTime.replace('Z', '')}
+                                {title: 'appointment 1', start: appointments[0]?.startTime.replace('Z', ''), end: appointments[0]?.endTime.replace('Z', '')}
                             ]
                         }
                         />

@@ -11,8 +11,8 @@ const appointments =
         //     cancellationReason: 'None',
         // },
         {
-            startTime: todayStr + 'T12:00:00',
-            endTime: Date(),
+            startTime: todayStr + 'T11:00:00',
+            endTime: todayStr + 'T11:30:00',
             priceFull: 10,
             canceled: true,
             cancellationReason: 'None'
