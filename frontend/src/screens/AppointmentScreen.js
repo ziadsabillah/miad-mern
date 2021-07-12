@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 
 import {
+    createAppointment,
     listAppointments
 } from '../actions/appointmentActions'
 import Loader from '../components/Loader'
@@ -38,6 +39,10 @@ const AppointmentScreen = ({ history, match }) => {
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
+    const handleAddEventClick = () => {
+        console.log('Add Event Clicked')
+        history.push('/appointments/add')
+    }
 
     useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
@@ -64,7 +69,6 @@ const AppointmentScreen = ({ history, match }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
-
                     <Modal
                         show={showModal}
                         onHide={handleClose}
@@ -84,7 +88,7 @@ const AppointmentScreen = ({ history, match }) => {
                         themeSystem='bootstrap'
                         allDaySlot={false}
                         headerToolbar={{
-                            left: 'prev,next today',
+                            left: 'prev,next',
                             center: 'addEventButton',
                             right: 'dayGridMonth, timeGridWeek, timeGridDay'
                         }}
@@ -96,22 +100,17 @@ const AppointmentScreen = ({ history, match }) => {
                             setEventInfo(info.event)
                         }}
                         customButtons={{
-                            addEventButton: {text: 'Ajouter un rendez-vous', click: () => {
-                                let dateStr = prompt('Entrer la ddate avec la forme YYYY-MM-DD');
-                                let date = new Date(dateStr + 'T00:00:00') // Will be in local time
-
-                            }}
+                            addEventButton: {text: 'Ajouter un rendez-vous', click: handleAddEventClick}
                         }}
-                        // events={appointments.map((appointment) => (
-                        //     { id: appointment._id, title: 'App', allDay: false, start: appointment?.startDate, end: appointment?.endDate}
-                        // ))} 
-                        events={
-                            [
-                                { title: 'appointment 1', start: appointments[0]?.startTime.replace('Z', ''), end: appointments[0]?.endTime.replace('Z', ''), extendedProps: {
-                                    client: 'Ziad'
-                                } }
-                            ]
-                        }
+                        events={appointments.length > 1 ? appointments?.map((appointment) => (
+                            { id: appointment._id, title: 'App', allDay: false, start: appointment?.startDate?.replace('Z', ''), end: appointment?.endDate?.replace('Z', '')}
+                        )) : [
+                            {
+                                title: 'appointment 1', start: appointments[0]?.startTime.replace('Z', ''), end: appointments[0]?.endTime.replace('Z', ''), extendedProps: {
+                                                client: userLogin.name
+                                }
+                            }
+                        ]} 
                     />
 
 
