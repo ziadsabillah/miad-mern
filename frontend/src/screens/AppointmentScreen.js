@@ -16,7 +16,7 @@ import {
     listAppointments
 } from '../actions/appointmentActions'
 import Loader from '../components/Loader'
-
+import Modal from 'react-bootstrap/Modal'
 
 const AppointmentScreen = ({ history, match }) => {
 
@@ -25,12 +25,22 @@ const AppointmentScreen = ({ history, match }) => {
     const appointmentList = useSelector((state) => state.appointmentList)
     const { loading, error, appointments, page, pages } = appointmentList
 
+    const [showModal, setModal] = useState(false);
+    const [eventInfo, setEventInfo] = useState({});
+
     const userLogin = useSelector((state) => state.userLogin)
 
     const { userInfo } = userLogin
 
+    const handleDateClick = (arg) => {
+        console.log(arg)
+    }
+    const handleClose = () => setModal(false)
+    const handleShow = () => setModal(true)
+
+
     useEffect(() => {
-        if(userInfo && userInfo.isAdmin) {
+        if (userInfo && userInfo.isAdmin) {
             dispatch(listAppointments('', 1))
         } else {
             history.push('/login')
@@ -54,26 +64,57 @@ const AppointmentScreen = ({ history, match }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
+
+                    <Modal
+                        show={showModal}
+                        onHide={handleClose}
+                        backdrop="static"
+                        keyboard={false}
+                        aria-labelledby='modal-label'>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Appointment Info</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {eventInfo.title + ' ' + eventInfo.start}
+                                <p>{eventInfo.extendedProps?.client}</p>
+                            </Modal.Body>
+                    </Modal>
                     <FullCalendar
                         plugins={[dayGridPlugin, timeGridPlugin, bootstrapPlugin]}
                         themeSystem='bootstrap'
                         allDaySlot={false}
                         headerToolbar={{
                             left: 'prev,next today',
-                            center: 'title',
+                            center: 'addEventButton',
                             right: 'dayGridMonth, timeGridWeek, timeGridDay'
                         }}
+                        dateClick={handleDateClick}
                         initialView="timeGridDay"
                         weekends={false}
+                        eventClick={(info) => {
+                            handleShow();
+                            setEventInfo(info.event)
+                        }}
+                        customButtons={{
+                            addEventButton: {text: 'Ajouter un rendez-vous', click: () => {
+                                let dateStr = prompt('Entrer la ddate avec la forme YYYY-MM-DD');
+                                let date = new Date(dateStr + 'T00:00:00') // Will be in local time
+
+                            }}
+                        }}
                         // events={appointments.map((appointment) => (
                         //     { id: appointment._id, title: 'App', allDay: false, start: appointment?.startDate, end: appointment?.endDate}
                         // ))} 
                         events={
                             [
-                                {title: 'appointment 1', start: appointments[0]?.startTime.replace('Z', ''), end: appointments[0]?.endTime.replace('Z', '')}
+                                { title: 'appointment 1', start: appointments[0]?.startTime.replace('Z', ''), end: appointments[0]?.endTime.replace('Z', ''), extendedProps: {
+                                    client: 'Ziad'
+                                } }
                             ]
                         }
-                        />
+                    />
+
+
                 </>
             )}
 
