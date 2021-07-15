@@ -33,7 +33,7 @@ const HomeScreen = ({ match }) => {
     <>
       <Meta />
 
-      {userInfo.isAdmin ? (
+      {userInfo?.isAdmin ? (
         <AdminDashboard />
       ) : (
         <div>
